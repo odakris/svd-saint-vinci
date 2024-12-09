@@ -9,9 +9,9 @@ const navigation = [
   { name: "Tableau de bord", href: "/dashboard", icon: LayoutDashboard },
   { name: "Élèves", href: "/dashboard/students", icon: Users },
   { name: "Classes", href: "/dashboard/classes", icon: GraduationCap },
-  // { name: "Matières", href: "/dashboard/subjects", icon: BookOpen },
-  // { name: "Emploi du temps", href: "/dashboard/schedule", icon: Calendar },
-  // { name: "Notes", href: "/dashboard/grades", icon: FileText },
+  { name: "Matières", href: "/dashboard/subjects", icon: BookOpen },
+  { name: "Emploi du temps", href: "/dashboard/schedule", icon: Calendar },
+  { name: "Notes", href: "/dashboard/grades", icon: FileText },
   { name: "Import", href: "/dashboard/import", icon: FileText },
 ];
 
