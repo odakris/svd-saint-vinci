@@ -1,7 +1,10 @@
+import AuthTabs from "../components/auth/AuthTabs";
+
 export default function Home() {
   return (
-    <div className="flex">
-      <div className="hidden md:block h-[100vh] w-[300px]">Saint-Vinci</div>
+    <div className="flex flex-col justify-center items-center h-full">
+      <div>Bienvenue sur le portail de Saint-Vinci</div>
+      <AuthTabs />
     </div>
   );
 }
