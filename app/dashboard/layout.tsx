@@ -3,9 +3,10 @@
 import { useState } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { LayoutDashboard, Users, GraduationCap, BookOpen, ClipboardList, Settings, LogOut } from "lucide-react";
+import { LayoutDashboard, Users, GraduationCap, BookOpen, ClipboardList, Settings, LogOut, Import } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import DashboardHeader from "@/components/dashboard/DashboardHeader";
 
 interface SidebarItem {
   icon: React.ElementType;
@@ -19,6 +20,7 @@ const sidebarItems: SidebarItem[] = [
   { icon: GraduationCap, label: "Classes", href: "/dashboard/classes" },
   { icon: BookOpen, label: "Matières", href: "/dashboard/subjects" },
   { icon: ClipboardList, label: "Notes", href: "/dashboard/grades" },
+  { icon: Import, label: "Import", href: "/dashboard/import" },
   { icon: Settings, label: "Paramètres", href: "/dashboard/settings" },
 ];
 
@@ -53,7 +55,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </div>
         </div>
       </aside>
-      <main className="flex-1 overflow-y-auto">{children}</main>
+      <main className="flex-1 overflow-y-auto">
+        <DashboardHeader />
+        {children}
+      </main>
     </div>
   );
 }
