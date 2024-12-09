@@ -1,25 +1,20 @@
-import mongoose, { Document, Schema } from "mongoose";
+import mongoose, { Schema, Document, Model } from "mongoose";
 
-// Define the interface for the Student document
-interface Student extends Document {
-  firstName: string;
-  lastName: string;
+export interface IStudent extends Document {
+  firstname: string;
+  lastname: string;
   dateOfBirth: Date;
-  academicYear: mongoose.Schema.Types.ObjectId;
-  createdAt: Date;
-  updatedAt: Date;
+  class?: string; // Nullable field for class assignment
 }
 
-// Define the Student Schema
-const StudentSchema = new Schema<Student>(
+const StudentSchema: Schema<IStudent> = new mongoose.Schema(
   {
-    firstName: { type: String, required: true },
-    lastName: { type: String, required: true },
+    firstname: { type: String, required: true },
+    lastname: { type: String, required: true },
     dateOfBirth: { type: Date, required: true },
-    academicYear: { type: mongoose.Schema.Types.ObjectId, ref: "AcademicYear", required: true },
+    class: { type: String, default: null },
   },
-  { timestamps: true } // Automatically adds `createdAt` and `updatedAt`
+  { timestamps: true }
 );
 
-// Export the Student model
-export default mongoose.models.Student || mongoose.model<Student>("Student", StudentSchema);
+export const Student: Model<IStudent> = mongoose.models.Student || mongoose.model<IStudent>("Student", StudentSchema);
