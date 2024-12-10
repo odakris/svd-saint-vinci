@@ -7,12 +7,12 @@ import { Student } from "@/types";
 import { useState } from "react";
 import Papa from "papaparse"; // CSV parser
 import * as XLSX from "xlsx"; // XLSX parser
-import { StudentFilters } from "../../../components/students/StudentsFilters";
-import { StudentList } from "../../../components/students/StudentsList";
+import { useToast } from "@/hooks/use-toast";
 
 export default function ImportPage() {
   const [students, setStudents] = useState<Student[]>([]);
   const [file, setFile] = useState<File | null>(null); // Track the selected file
+  const { toast } = useToast();
 
   // Handle the file selection
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -74,13 +74,38 @@ export default function ImportPage() {
       }
     };
     console.log("filename :" + file.name);
+    const formattedData = students.map((row: any) => ({
+      lastName: row["Nom"] || row["NOM"] || row["nom"],
+      firstName: row["Prenom"] || row["PRENOM"] || row["prenom"] || row["Prénom"],
+      birthDate: row["Date de Naissance"] || row["DATE_NAISSANCE"] || row["date_naissance"],
+      email: `${row["Prenom"] || row["PRENOM"] || row["prenom"] || row["Prénom"]}.${
+        row["Nom"] || row["NOM"] || row["nom"]
+      }@ecole.fr`.toLowerCase(),
+      parentEmail: `parent.${row["Nom"] || row["NOM"] || row["nom"]}@email.com`.toLowerCase(),
+      class: row["Classe"] || row["CLASSE"] || row["classe"] || "6ème A",
+    }));
+
+    const response = await fetch("/api/students/import", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formattedData),
+    });
+
+    if (!response.ok) {
+      throw new Error("Erreur lors de l'import");
+    }
+
+    const result = await response.json();
+    console.log(result);
+    toast({
+      title: "Import réussi",
+      description: `${result.imported} élèves importés avec succès.`,
+    });
 
     reader.readAsArrayBuffer(file); // Read the file as ArrayBuffer (for binary files like XLSX)
   };
-
-  console.log(students);
-
-  console.log(typeof students);
 
   return (
     <div className="flex-1 space-y-4 p-8 pt-6">
@@ -95,7 +120,7 @@ export default function ImportPage() {
             accept=".csv,.xls,.xlsx" // Accept only CSV and XLSX files
           />
           {/* Import button to process the file */}
-          <Button className="mx-4" onClick={handleImportClick}>
+          <Button className="mx-4" onClick={() => handleImportClick}>
             <PlusCircle className="mr-2 h-4 w-4" />
             Import
           </Button>
@@ -106,7 +131,7 @@ export default function ImportPage() {
         {students && students.length > 0
           ? students.map((student, index) => (
               <div key={index} className="p-2 border rounded-md my-2">
-                {student["Prénom"]} {student["Nom"]} - {student["Date de Naissance"]}
+                {student.firstName} {student.lastName} - {student.birthDate}
               </div>
             ))
           : "Aucune data importée"}
@@ -114,3 +139,47 @@ export default function ImportPage() {
     </div>
   );
 }
+
+/*
+
+    const jsonData = XLSX.utils.sheet_to_json(sheet);
+
+        const formattedData = jsonData.map((row: any) => ({
+          lastName: row['Nom'] || row['NOM'] || row['nom'],
+          firstName: row['Prenom'] || row['PRENOM'] || row['prenom'] || row['Prénom'],
+          birthDate: row['Date de naissance'] || row['DATE_NAISSANCE'] || row['date_naissance'],
+          email: `${row['Prenom'] || row['PRENOM'] || row['prenom'] || row['Prénom']}.${row['Nom'] || row['NOM'] || row['nom']}@ecole.fr`.toLowerCase(),
+          parentEmail: `parent.${row['Nom'] || row['NOM'] || row['nom']}@email.com`.toLowerCase(),
+          class: row['Classe'] || row['CLASSE'] || row['classe'] || '6ème A'
+        }));
+
+        const response = await fetch('/api/students/import', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formattedData),
+        });
+
+        if (!response.ok) {
+          throw new Error('Erreur lors de l\'import');
+        }
+
+        const result = await response.json();
+        toast({
+          title: "Import réussi",
+          description: `${result.imported} élèves importés avec succès.`,
+        });
+        onImportSuccess();
+      } catch (error) {
+        console.error('Erreur:', error);
+        toast({
+          title: "Erreur",
+          description: "Une erreur est survenue lors de l'import.",
+          variant: "destructive",
+        });
+      } finally {
+        setIsLoading(false);
+      }
+
+*/
