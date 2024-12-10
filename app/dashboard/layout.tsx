@@ -3,10 +3,21 @@
 import { useState } from "react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { LayoutDashboard, Users, GraduationCap, BookOpen, ClipboardList, Settings, LogOut, Import } from "lucide-react";
+import {
+  LayoutDashboard,
+  Users,
+  GraduationCap,
+  BookOpen,
+  ClipboardList,
+  Settings,
+  LogOut,
+  Import,
+  UserPen,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
+import Image from "next/image";
 
 interface SidebarItem {
   icon: React.ElementType;
@@ -18,6 +29,7 @@ const sidebarItems: SidebarItem[] = [
   { icon: LayoutDashboard, label: "Tableau de bord", href: "/dashboard" },
   { icon: Users, label: "Élèves", href: "/dashboard/students" },
   { icon: GraduationCap, label: "Classes", href: "/dashboard/classes" },
+  { icon: UserPen, label: "Professeurs", href: "/dashboard/teachers" },
   { icon: BookOpen, label: "Matières", href: "/dashboard/subjects" },
   { icon: ClipboardList, label: "Notes", href: "/dashboard/grades" },
   { icon: Import, label: "Import", href: "/dashboard/import" },
@@ -32,8 +44,17 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     <div className="flex h-screen bg-gray-100">
       <aside className={cn("bg-white border-r transition-all duration-300", collapsed ? "w-16" : "w-64")}>
         <div className="flex flex-col h-full">
-          <div className="h-16 flex items-center justify-center border-b">
-            <h1 className={cn("font-bold", collapsed ? "hidden" : "block")}>Jach Manager</h1>
+          <div className="h-16 flex items-center justify-evenly border-b">
+            <Image
+              src="/images/logo-ecole.jpg"
+              alt="Groupe Scolaire Saint-Exupéry"
+              width={50}
+              height={50}
+              className="rounded-full"
+            />
+            <p className={cn("font-bold", collapsed ? "hidden" : "block text-sm text-center w-[150px]")}>
+              Groupe Scolaire Saint-Exupery
+            </p>
           </div>
           <nav className="flex-1 p-4">
             {sidebarItems.map((item) => (

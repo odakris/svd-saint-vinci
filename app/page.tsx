@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { GraduationCap } from "lucide-react";
+import Image from "next/image";
 
 export default function Home() {
   const router = useRouter();
@@ -15,8 +16,17 @@ export default function Home() {
           <div className="flex justify-center">
             <GraduationCap className="h-12 w-12 text-primary" />
           </div>
-          <h1 className="text-3xl font-bold">EduManager Pro</h1>
-          <p className="text-muted-foreground">Système de gestion scolaire pour les professionnels de l éducation</p>
+          <h1 className="text-3xl font-bold">Groupe Scolaire Saint-Exupéry</h1>
+          <Image
+            src="/images/logo-ecole.jpg"
+            alt="Groupe Scolaire Saint-Exupéry"
+            width={200}
+            height={200}
+            className="rounded-full align-baseline m-auto"
+          />
+          <p className="text-muted-foreground">
+            {"Système de gestion scolaire pour les professionnels de l'éducation"}
+          </p>
         </div>
 
         <div className="space-y-4">
