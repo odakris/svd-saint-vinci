@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/db";
-import { parseExcel } from "@/lib/parseExcel";
 import { Student } from "@/models/Student";
 
 export async function POST(req: Request) {

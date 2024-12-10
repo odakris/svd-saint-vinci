@@ -7,6 +7,8 @@ import { Student } from "@/types";
 import { useState } from "react";
 import Papa from "papaparse"; // CSV parser
 import * as XLSX from "xlsx"; // XLSX parser
+import { StudentFilters } from "../../../components/students/StudentsFilters";
+import { StudentList } from "../../../components/students/StudentsList";
 
 export default function ImportPage() {
   const [students, setStudents] = useState<Student[]>([]);
@@ -25,7 +27,7 @@ export default function ImportPage() {
     Papa.parse(fileContent, {
       complete: (result) => {
         console.log("Parsed CSV Result: ", result);
-        const studentsData: Student[] = result.data; // Adjust this to match your Student type
+        const studentsData: Student[] = result.data as Student[]; // Adjust this to match your Student type
         setStudents(studentsData);
       },
       header: true, // If the CSV has headers
@@ -39,7 +41,10 @@ export default function ImportPage() {
 
     // Assuming you want to use the first sheet
     const firstSheet = workbook.Sheets[sheetNames[0]];
-    const studentsData: Student[] = XLSX.utils.sheet_to_json(firstSheet); // Converts the sheet to JSON
+    console.log(firstSheet[0]);
+    const studentsData: Student[] = XLSX.utils.sheet_to_json(firstSheet, {
+      raw: false,
+    }); // Converts the sheet to JSON
     setStudents(studentsData); // Update students state with parsed data
   };
 
@@ -55,6 +60,7 @@ export default function ImportPage() {
     reader.onload = (e) => {
       const fileContent = e.target?.result;
       if (!fileContent) return;
+      console.log("fileContent :" + fileContent.valueOf());
 
       // Determine the file type by the extension
       const fileExtension = file?.name.split(".").pop()?.toLowerCase();
@@ -67,11 +73,14 @@ export default function ImportPage() {
         console.log("Unsupported file type");
       }
     };
+    console.log("filename :" + file.name);
 
     reader.readAsArrayBuffer(file); // Read the file as ArrayBuffer (for binary files like XLSX)
   };
 
   console.log(students);
+
+  console.log(typeof students);
 
   return (
     <div className="flex-1 space-y-4 p-8 pt-6">
@@ -97,7 +106,7 @@ export default function ImportPage() {
         {students && students.length > 0
           ? students.map((student, index) => (
               <div key={index} className="p-2 border rounded-md my-2">
-                {student["Nom"]} {student["Prénom"]} - {student["Date de Naissance"]}
+                {student["Prénom"]} {student["Nom"]} - {student["Date de Naissance"]}
               </div>
             ))
           : "Aucune data importée"}
