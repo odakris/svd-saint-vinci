@@ -22,6 +22,5 @@ export interface Teacher {
   firstName: string;
   lastName: string;
   email: string;
-  subjects: string[];
-  mainClass?: string;
+  class?: string;
 }
