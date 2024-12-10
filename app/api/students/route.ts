@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/lib/db";
-import Student from "@/models/Student";
+import StudentModel from "@/models/Student";
 
 export async function GET() {
   try {
     await connectDB();
-    const students = await Student.find({}).sort({ lastName: 1 });
+    const students = await StudentModel.find({}).sort({ lastName: 1 });
     return NextResponse.json(students);
   } catch (error) {
     console.log(error);
@@ -17,7 +17,8 @@ export async function POST(request: Request) {
   try {
     await connectDB();
     const data = await request.json();
-    const student = await Student.create(data);
+    const student = await StudentModel.create(data);
+    console.log("student: " + student);
     return NextResponse.json(student, { status: 201 });
   } catch (error) {
     console.log(error);

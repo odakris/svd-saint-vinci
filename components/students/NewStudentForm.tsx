@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { format } from "date-fns";
 
-export default function CreateStudentForm() {
+export default function NewStudentForm() {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -18,32 +18,68 @@ export default function CreateStudentForm() {
     parentEmail: "",
   });
 
-  const [showCalendar, setShowCalendar] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Handle input change
   const handleChange = (field: string, value: any) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  // Handle form submission
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    // Check for required fields
+    // Validate required fields
     if (!formData.firstName || !formData.lastName || !formData.birthDate || !formData.class) {
       alert("Please fill out all required fields.");
       return;
     }
 
-    console.log("Submitted data:", formData);
-    alert("Student created successfully!");
+    const formatedData = {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      birthDate: formData.birthDate, // Utiliser la date telle quelle
+      email: `${formData.firstName}.${formData.lastName}@ecole.fr`.toLowerCase(), // Générer un email basé sur prénom et nom
+      parentEmail: formData.parentEmail ? formData.parentEmail : `parent.${formData.lastName}@email.com`.toLowerCase(), // Email parent par défaut
+      class: formData.class, // Classe par défaut
+    };
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("/api/students/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formatedData),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        alert("Student created successfully!");
+        console.log("Created student:", result);
+        setFormData({
+          firstName: "",
+          lastName: "",
+          birthDate: null,
+          class: "",
+          parentEmail: "",
+        });
+      } else {
+        const errorData = await response.json();
+        alert(`Error: ${errorData.error || "Failed to create student"}`);
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert("An error occurred while creating the student.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <div className="max-w-md mx-auto p-6 bg-white shadow rounded">
       <h2 className="text-xl font-bold mb-4">Create New Student</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* First Name */}
         <div>
           <Label htmlFor="firstName">First Name *</Label>
           <Input
@@ -56,7 +92,6 @@ export default function CreateStudentForm() {
           />
         </div>
 
-        {/* Last Name */}
         <div>
           <Label htmlFor="lastName">Last Name *</Label>
           <Input
@@ -69,10 +104,9 @@ export default function CreateStudentForm() {
           />
         </div>
 
-        {/* Date of Birth */}
         <div>
           <Label htmlFor="birthDate">Date of Birth *</Label>
-          <Popover open={showCalendar} onOpenChange={setShowCalendar}>
+          <Popover>
             <PopoverTrigger asChild>
               <Button variant="outline" className="w-full text-left">
                 {formData.birthDate ? format(formData.birthDate, "dd/MM/yyyy") : "Pick a date"}
@@ -81,17 +115,13 @@ export default function CreateStudentForm() {
             <PopoverContent align="start">
               <Calendar
                 mode="single"
-                selected={formData.birthDate}
-                onSelect={(date: any) => {
-                  handleChange("birthDate", date);
-                  setShowCalendar(false);
-                }}
+                selected={formData.birthDate || undefined}
+                onSelect={(date: Date | undefined) => handleChange("birthDate", date)}
               />
             </PopoverContent>
           </Popover>
         </div>
 
-        {/* Class */}
         <div>
           <Label htmlFor="class">Class *</Label>
           <Select onValueChange={(value) => handleChange("class", value)} value={formData.class}>
@@ -107,21 +137,19 @@ export default function CreateStudentForm() {
           </Select>
         </div>
 
-        {/* Parent Email (Optional) */}
         <div>
           <Label htmlFor="parentEmail">Parent Email</Label>
           <Input
             id="parentEmail"
             type="email"
-            placeholder="Enter parent's email (optional)"
+            placeholder="Enter parent's email"
             value={formData.parentEmail}
             onChange={(e) => handleChange("parentEmail", e.target.value)}
           />
         </div>
 
-        {/* Submit Button */}
-        <Button type="submit" className="w-full">
-          Create Student
+        <Button type="submit" className="w-full" disabled={isSubmitting}>
+          {isSubmitting ? "Creating..." : "Create Student"}
         </Button>
       </form>
     </div>
