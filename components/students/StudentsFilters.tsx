@@ -30,10 +30,7 @@ export function StudentsFilters({ searchQuery, setSearchQuery, selectedClass, se
           {Object.keys(Classes)
             .filter((key) => isNaN(Number(key))) // Exclude numeric keys
             .map((className) => (
-              <SelectItem
-                key={Classes[className as keyof typeof Classes]}
-                value={Classes[className as keyof typeof Classes].toString()}
-              >
+              <SelectItem key={Classes[className as keyof typeof Classes]} value={className.toString()}>
                 {className}
               </SelectItem>
             ))}
