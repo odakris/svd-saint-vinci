@@ -2,6 +2,7 @@
 
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Classes } from "@/types";
 
 interface ClassFiltersProps {
   searchQuery: string;
@@ -26,10 +27,16 @@ export function ClassFilters({ searchQuery, setSearchQuery, selectedLevel, setSe
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="all">Tous les niveaux</SelectItem>
-          <SelectItem value="6ème">6ème</SelectItem>
-          <SelectItem value="5ème">5ème</SelectItem>
-          <SelectItem value="4ème">4ème</SelectItem>
-          <SelectItem value="3ème">3ème</SelectItem>
+          {Object.keys(Classes)
+            .filter((key) => isNaN(Number(key))) // Exclude numeric keys
+            .map((className) => (
+              <SelectItem
+                key={Classes[className as keyof typeof Classes]}
+                value={Classes[className as keyof typeof Classes].toString()}
+              >
+                {className}
+              </SelectItem>
+            ))}
         </SelectContent>
       </Select>
     </div>
