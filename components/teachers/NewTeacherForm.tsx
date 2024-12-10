@@ -3,11 +3,8 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { format } from "date-fns";
 import { passwordGenerator } from "@/utils/PasswordGenerator";
 import { Classes } from "../../types";
 
@@ -111,20 +108,7 @@ export default function NewTeacherForm() {
 
         <div>
           <Label htmlFor="birthDate">Date de naissance *</Label>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button variant="outline" className="w-full text-left">
-                {formData.birthDate ? format(formData.birthDate, "dd/MM/yyyy") : "Choisissez la date"}
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent align="start">
-              <Calendar
-                mode="single"
-                selected={formData.birthDate || undefined}
-                onSelect={(date: Date | undefined) => handleChange("birthDate", date)}
-              />
-            </PopoverContent>
-          </Popover>
+          <Input id="birthDate" type="date" onChange={(e) => handleChange("birthDate", e.target.value)} required />
         </div>
 
         <div>
@@ -137,10 +121,7 @@ export default function NewTeacherForm() {
               {Object.keys(Classes)
                 .filter((key) => isNaN(Number(key))) // Exclude numeric keys
                 .map((className) => (
-                  <SelectItem
-                    key={Classes[className as keyof typeof Classes]}
-                    value={Classes[className as keyof typeof Classes].toString()}
-                  >
+                  <SelectItem key={Classes[className as keyof typeof Classes]} value={className.toString()}>
                     {className}
                   </SelectItem>
                 ))}

@@ -24,16 +24,13 @@ export function TeachersFilters({ searchQuery, setSearchQuery, selectedClass, se
       <Select value={selectedClass} onValueChange={setSelectedClass}>
         <SelectTrigger className="w-[180px]">
           <SelectValue placeholder="Filtrer par classe" />
-        </SelectTrigger>
+        </SelectTrigger>{" "}
         <SelectContent>
           <SelectItem value="all">Tous les niveaux</SelectItem>
           {Object.keys(Classes)
             .filter((key) => isNaN(Number(key))) // Exclude numeric keys
             .map((className) => (
-              <SelectItem
-                key={Classes[className as keyof typeof Classes]}
-                value={Classes[className as keyof typeof Classes].toString()}
-              >
+              <SelectItem key={Classes[className as keyof typeof Classes]} value={className.toString()}>
                 {className}
               </SelectItem>
             ))}
