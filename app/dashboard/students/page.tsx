@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { StudentList } from "@/components/students/StudentsList";
-import { StudentFilters } from "@/components/students/StudentsFilters";
+import { StudentsList } from "@/components/students/StudentsList";
+import { StudentsFilters } from "@/components/students/StudentsFilters";
 
 export default function StudentsPage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -11,13 +11,13 @@ export default function StudentsPage() {
   return (
     <div className="flex-1 space-y-4 p-8 pt-6">
       <div className="flex items-center justify-between"></div>
-      <StudentFilters
+      <StudentsFilters
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         selectedClass={selectedClass}
         setSelectedClass={setSelectedClass}
       />
-      <StudentList searchQuery={searchQuery} selectedClass={selectedClass} />
+      <StudentsList searchQuery={searchQuery} selectedClass={selectedClass} />
     </div>
   );
 }

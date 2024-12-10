@@ -12,7 +12,7 @@ interface StudentListProps {
   selectedClass: string;
 }
 
-export function StudentList({ searchQuery, selectedClass }: StudentListProps) {
+export function StudentsList({ searchQuery, selectedClass }: StudentListProps) {
   const { students, isLoading, mutate } = useStudents();
   const router = useRouter();
 

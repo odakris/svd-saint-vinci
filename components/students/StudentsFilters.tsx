@@ -10,7 +10,7 @@ interface StudentFiltersProps {
   setSelectedClass: (value: string) => void;
 }
 
-export function StudentFilters({ searchQuery, setSearchQuery, selectedClass, setSelectedClass }: StudentFiltersProps) {
+export function StudentsFilters({ searchQuery, setSearchQuery, selectedClass, setSelectedClass }: StudentFiltersProps) {
   return (
     <div className="flex space-x-4">
       <div className="flex-1">

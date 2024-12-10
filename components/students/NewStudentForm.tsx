@@ -78,14 +78,14 @@ export default function NewStudentForm() {
 
   return (
     <div className="max-w-md mx-auto p-6 bg-white shadow rounded">
-      <h2 className="text-xl font-bold mb-4">Create New Student</h2>
+      <h2 className="text-xl font-bold mb-4">Ajouter un nouvel élève</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <Label htmlFor="firstName">First Name *</Label>
+          <Label htmlFor="firstName">Prénom *</Label>
           <Input
             id="firstName"
             type="text"
-            placeholder="Enter first name"
+            placeholder="Entrer prénom"
             value={formData.firstName}
             onChange={(e) => handleChange("firstName", e.target.value)}
             required
@@ -93,11 +93,11 @@ export default function NewStudentForm() {
         </div>
 
         <div>
-          <Label htmlFor="lastName">Last Name *</Label>
+          <Label htmlFor="lastName">Nom *</Label>
           <Input
             id="lastName"
             type="text"
-            placeholder="Enter last name"
+            placeholder="Entrer nom"
             value={formData.lastName}
             onChange={(e) => handleChange("lastName", e.target.value)}
             required
@@ -105,11 +105,11 @@ export default function NewStudentForm() {
         </div>
 
         <div>
-          <Label htmlFor="birthDate">Date of Birth *</Label>
+          <Label htmlFor="birthDate">Date de naissance *</Label>
           <Popover>
             <PopoverTrigger asChild>
               <Button variant="outline" className="w-full text-left">
-                {formData.birthDate ? format(formData.birthDate, "dd/MM/yyyy") : "Pick a date"}
+                {formData.birthDate ? format(formData.birthDate, "dd/MM/yyyy") : "Choisissez la date"}
               </Button>
             </PopoverTrigger>
             <PopoverContent align="start">
@@ -123,10 +123,10 @@ export default function NewStudentForm() {
         </div>
 
         <div>
-          <Label htmlFor="class">Class *</Label>
+          <Label htmlFor="class">Classe *</Label>
           <Select onValueChange={(value) => handleChange("class", value)} value={formData.class}>
             <SelectTrigger id="class">
-              <SelectValue placeholder="Select a class" />
+              <SelectValue placeholder="Sélectionnez une classe" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="6eme">6eme</SelectItem>
@@ -138,18 +138,18 @@ export default function NewStudentForm() {
         </div>
 
         <div>
-          <Label htmlFor="parentEmail">Parent Email</Label>
+          <Label htmlFor="parentEmail">Email des parents</Label>
           <Input
             id="parentEmail"
             type="email"
-            placeholder="Enter parent's email"
+            placeholder="Entrer email parent"
             value={formData.parentEmail}
             onChange={(e) => handleChange("parentEmail", e.target.value)}
           />
         </div>
 
         <Button type="submit" className="w-full" disabled={isSubmitting}>
-          {isSubmitting ? "Creating..." : "Create Student"}
+          {isSubmitting ? "Création..." : "Ajouter un élève"}
         </Button>
       </form>
     </div>
