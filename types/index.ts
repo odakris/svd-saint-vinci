@@ -22,5 +22,17 @@ export interface Teacher {
   firstName: string;
   lastName: string;
   email: string;
+  password: string;
   class?: string;
+}
+
+export enum Classes {
+  "Petite Section" = 1,
+  "Moyenne Section" = 2,
+  "Grande Section" = 3,
+  "CP" = 4,
+  "CE1" = 5,
+  "CE2" = 6,
+  "CM1" = 7,
+  "CM2" = 8,
 }

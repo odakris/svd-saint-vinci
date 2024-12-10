@@ -2,10 +2,11 @@
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Edit2, Trash2 } from "lucide-react";
+import { Edit2, Eye, EyeOff, Trash2 } from "lucide-react";
 import type { Teacher } from "@/types";
 import { useTeachers } from "@/hooks/useTeachers";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface TeacherListProps {
   searchQuery: string;
@@ -14,6 +15,7 @@ interface TeacherListProps {
 
 export function TeachersList({ searchQuery, selectedClass }: TeacherListProps) {
   const { teachers, isLoading, mutate } = useTeachers();
+  const [visiblePasswords, setVisiblePasswords] = useState<Record<string, boolean>>({});
   const router = useRouter();
 
   if (isLoading) {
@@ -28,8 +30,15 @@ export function TeachersList({ searchQuery, selectedClass }: TeacherListProps) {
     return matchesSearch && matchesClass;
   });
 
+  const handleTogglePassword = (id: string) => {
+    setVisiblePasswords((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
+
   const handleDelete = async (id: string) => {
-    if (confirm("Êtes-vous sûr de vouloir supprimer cet élève ?")) {
+    if (confirm("Êtes-vous sûr de vouloir supprimer ce professeur ?")) {
       try {
         await fetch(`/api/teachers/${id}`, {
           method: "DELETE",
@@ -52,6 +61,7 @@ export function TeachersList({ searchQuery, selectedClass }: TeacherListProps) {
               <TableHead>Prénom</TableHead>
               <TableHead>Classe</TableHead>
               <TableHead>Email</TableHead>
+              <TableHead>Mot de Passe</TableHead>
               <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
@@ -62,6 +72,14 @@ export function TeachersList({ searchQuery, selectedClass }: TeacherListProps) {
                 <TableCell>{teacher.firstName}</TableCell>
                 <TableCell>{teacher.class}</TableCell>
                 <TableCell>{teacher.email}</TableCell>
+                <TableCell>
+                  <div className="flex justify-between items-center space-x-2 w-[200px]">
+                    <span>{visiblePasswords[teacher._id] ? teacher.password : "*".repeat(12)}</span>
+                    <Button variant="ghost" size="icon" onClick={() => handleTogglePassword(teacher._id)}>
+                      {visiblePasswords[teacher._id] ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    </Button>
+                  </div>
+                </TableCell>
                 <TableCell className="flex space-x-2">
                   <Button
                     variant="ghost"

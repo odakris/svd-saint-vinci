@@ -17,6 +17,7 @@ export async function POST(request: Request) {
   try {
     await connectDB();
     const data = await request.json();
+    console.log("Data Received:", data);
     const teacher = await TeacherModel.create(data);
     console.log("teacher: " + teacher);
     return NextResponse.json(teacher, { status: 201 });

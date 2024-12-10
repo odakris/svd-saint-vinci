@@ -27,6 +27,11 @@ const TeacherSchema = new mongoose.Schema(
       trim: true,
       lowercase: true,
     },
+    password: {
+      type: String,
+      required: [true, "Le mot de passe est requis"],
+      trim: true,
+    },
   },
   {
     timestamps: true,

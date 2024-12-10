@@ -8,6 +8,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { format } from "date-fns";
+import { passwordGenerator } from "@/utils/PasswordGenerator";
+import { Classes } from "../../types";
 
 export default function NewTeacherForm() {
   const [formData, setFormData] = useState({
@@ -32,13 +34,19 @@ export default function NewTeacherForm() {
       return;
     }
 
+    const password = passwordGenerator(4);
+    console.log(password);
+
     const formatedData = {
       firstName: formData.firstName,
       lastName: formData.lastName,
-      birthDate: formData.birthDate, // Utiliser la date telle quelle
-      email: `${formData.firstName}.${formData.lastName}@ecole.fr`.toLowerCase(), // Générer un email basé sur prénom et nom
-      class: formData.class, // Classe par défaut
+      birthDate: formData.birthDate,
+      email: `${formData.firstName}.${formData.lastName}@group-saint-exupery.fr`.toLowerCase(), // Générer un email basé sur prénom et nom
+      password: password,
+      class: formData.class,
     };
+
+    console.log("Formated Data:", formatedData);
 
     setIsSubmitting(true);
 
@@ -126,10 +134,16 @@ export default function NewTeacherForm() {
               <SelectValue placeholder="Sélectionnez une classe" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="6eme">6eme</SelectItem>
-              <SelectItem value="5eme">5eme</SelectItem>
-              <SelectItem value="4eme">4eme</SelectItem>
-              <SelectItem value="3eme">3eme</SelectItem>
+              {Object.keys(Classes)
+                .filter((key) => isNaN(Number(key))) // Exclude numeric keys
+                .map((className) => (
+                  <SelectItem
+                    key={Classes[className as keyof typeof Classes]}
+                    value={Classes[className as keyof typeof Classes].toString()}
+                  >
+                    {className}
+                  </SelectItem>
+                ))}
             </SelectContent>
           </Select>
         </div>
