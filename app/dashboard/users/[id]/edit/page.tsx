@@ -31,11 +31,12 @@ const EditUserPage = () => {
           throw new Error("Failed to fetch user data");
         }
         const data = await response.json();
+        console.log(data);
 
         setFormData({
           firstName: data.firstName || "",
           lastName: data.lastName || "",
-          birthDate: data.birthDate || "", // Default to empty string if undefined
+          birthDate: data.birthDate || "",
           email: data.email || "",
           password: data.password || "",
           class: data.class || "",
@@ -61,26 +62,17 @@ const EditUserPage = () => {
     setError("");
 
     try {
-      //   console.log(formData);
-      //   if (formData.role === "Admin") {
-      //     setFormData({
-      //       firstName: formData.firstName,
-      //       lastName: formData.lastName,
-      //       birthDate: formData.birthDate,
-      //       email: formData.email,
-      //       password: formData.password,
-      //       class: "",
-      //       role: formData.role,
-      //     });
-      //   }
-      //   console.log(formData);
+      // Ensure the class field is cleared if the role is Admin
+      const updatedFormData = formData.role === "Admin" ? { ...formData, class: "" } : formData;
+
+      console.log(updatedFormData);
+
       const response = await fetch(`/api/users/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-
-        body: JSON.stringify(formData),
+        body: JSON.stringify(updatedFormData),
       });
 
       if (!response.ok) {

@@ -58,9 +58,11 @@ export function UsersList({ searchQuery, selectedClass }: UserListProps) {
             <TableRow>
               <TableHead>Nom</TableHead>
               <TableHead>Prénom</TableHead>
+              <TableHead>Date de Naissance</TableHead>
               <TableHead>Classe</TableHead>
               <TableHead>Email</TableHead>
-              <TableHead>Password</TableHead>
+              <TableHead>Mot de Passe</TableHead>
+
               <TableHead>Role</TableHead>
               <TableHead>Actions</TableHead>
             </TableRow>
@@ -70,6 +72,7 @@ export function UsersList({ searchQuery, selectedClass }: UserListProps) {
               <TableRow key={user._id}>
                 <TableCell>{user.lastName}</TableCell>
                 <TableCell>{user.firstName}</TableCell>
+                <TableCell>{user.birthDate}</TableCell>
                 <TableCell>{user.class ? user.class : "-"}</TableCell>
                 <TableCell>{user.email}</TableCell>
                 <TableCell>
@@ -80,6 +83,7 @@ export function UsersList({ searchQuery, selectedClass }: UserListProps) {
                     <span>{visiblePasswords[user._id] ? user.password : "*".repeat(12)}</span>
                   </div>
                 </TableCell>
+
                 <TableCell>{user.role}</TableCell>
                 <TableCell className="flex space-x-2">
                   <Button variant="ghost" size="icon" onClick={() => router.push(`/dashboard/users/${user._id}/edit`)}>

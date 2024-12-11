@@ -12,7 +12,7 @@ export default function NewUserForm() {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
-    birthDate: null,
+    birthDate: "",
     class: "",
     role: "",
   });
@@ -27,7 +27,7 @@ export default function NewUserForm() {
     event.preventDefault();
 
     // Validate required fields
-    if (!formData.firstName || !formData.lastName || !formData.birthDate) {
+    if (!formData.firstName || !formData.lastName || !formData.birthDate || !formData.role) {
       alert("Please fill out all required fields.");
       return;
     }
@@ -64,7 +64,7 @@ export default function NewUserForm() {
         setFormData({
           firstName: "",
           lastName: "",
-          birthDate: null,
+          birthDate: "",
           class: "",
           role: "",
         });
