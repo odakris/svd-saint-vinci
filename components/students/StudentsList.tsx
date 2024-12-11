@@ -50,8 +50,8 @@ export function StudentsList({ searchQuery, selectedClass }: StudentListProps) {
             <TableRow>
               <TableHead>Nom</TableHead>
               <TableHead>Prénom</TableHead>
+              <TableHead>Date de naissance</TableHead>
               <TableHead>Classe</TableHead>
-              <TableHead>Email</TableHead>
               <TableHead>Email Parent</TableHead>
               <TableHead>Actions</TableHead>
             </TableRow>
@@ -61,8 +61,8 @@ export function StudentsList({ searchQuery, selectedClass }: StudentListProps) {
               <TableRow key={student._id}>
                 <TableCell>{student.lastName}</TableCell>
                 <TableCell>{student.firstName}</TableCell>
+                <TableCell>{student.birthDate}</TableCell>
                 <TableCell>{student.class}</TableCell>
-                <TableCell>{student.email}</TableCell>
                 <TableCell>{student.parentEmail}</TableCell>
                 <TableCell className="flex space-x-2">
                   <Button

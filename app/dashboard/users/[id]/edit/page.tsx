@@ -90,7 +90,7 @@ const EditUserPage = () => {
 
   return (
     <div className="max-w-md mx-auto p-6 bg-white shadow rounded">
-      <h2 className="text-xl font-bold mb-4">{"Modifier l'élève"}</h2>
+      <h2 className="text-xl font-bold mb-4">{"Modifier cet utilisateur"}</h2>
       {error && <p className="text-red-500">{error}</p>}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>

@@ -13,6 +13,7 @@ import {
   LogOut,
   Import,
   UserPen,
+  User,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
@@ -30,10 +31,10 @@ const sidebarItems: SidebarItem[] = [
   { icon: Users, label: "Élèves", href: "/dashboard/students" },
   { icon: GraduationCap, label: "Classes", href: "/dashboard/classes" },
   { icon: UserPen, label: "Professeurs", href: "/dashboard/teachers" },
-  { icon: UserPen, label: "Utilisateurs", href: "/dashboard/users" },
-  { icon: BookOpen, label: "Matières", href: "/dashboard/subjects" },
+  { icon: User, label: "Utilisateurs", href: "/dashboard/users" },
+  { icon: BookOpen, label: "Matières & Cours", href: "/dashboard/subjects" },
   { icon: ClipboardList, label: "Notes", href: "/dashboard/grades" },
-  { icon: Import, label: "Import", href: "/dashboard/import" },
+  { icon: Import, label: "Import Elève", href: "/dashboard/import" },
   { icon: Settings, label: "Paramètres", href: "/dashboard/settings" },
 ];
 

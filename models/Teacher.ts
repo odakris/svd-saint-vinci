@@ -38,7 +38,6 @@ const TeacherSchema = new mongoose.Schema(
   }
 );
 
-// export default mongoose.models.TeacherModel || mongoose.model("Teacher", TeacherSchema);
 // Create and export the model only once
 const TeacherModel = mongoose.models.Teacher || mongoose.model("Teacher", TeacherSchema);
 

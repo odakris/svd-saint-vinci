@@ -13,7 +13,7 @@ export default function SubjectsPage() {
         <h2 className="text-3xl font-bold tracking-tight">Gestion des Matières & Cours</h2>
         <Button onClick={() => router.push("/dashboard/subjects/new")}>
           <PlusCircle className="mr-2 h-4 w-4" />
-          Matière / Cours
+          Matières / Cours
         </Button>
       </div>
     </div>

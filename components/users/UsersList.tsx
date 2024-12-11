@@ -76,11 +76,11 @@ export function UsersList({ searchQuery, selectedRole }: UserListProps) {
                 <TableCell>{user.class ? user.class : "-"}</TableCell>
                 <TableCell>{user.email}</TableCell>
                 <TableCell>
-                  <div className="flex justify-between items-center space-x-2 w-[200px] overflow-hidden">
+                  <div className="flex justify-between items-center space-x-2 w-[150px] overflow-hidden">
                     <Button variant="ghost" size="icon" onClick={() => handleTogglePassword(user._id)}>
                       {visiblePasswords[user._id] ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                     </Button>
-                    <span>{visiblePasswords[user._id] ? user.password : "*".repeat(12)}</span>
+                    <span className="max-w-[100px]">{visiblePasswords[user._id] ? user.password : "*".repeat(12)}</span>
                   </div>
                 </TableCell>
 
