@@ -6,6 +6,7 @@ import { Edit2, Trash2 } from "lucide-react";
 import type { Class } from "@/types";
 import { useClasses } from "@/hooks/useClasses";
 import { useRouter } from "next/router";
+import { v4 as uuidv4 } from "uuid";
 
 interface ClassListProps {
   searchQuery: string;
@@ -33,14 +34,16 @@ export function ClassList({ searchQuery, selectedLevel }: ClassListProps) {
           <TableRow>
             <TableHead>Niveau</TableHead>
             <TableHead>Effectif</TableHead>
+            <TableHead>Professeur</TableHead>
             <TableHead>Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {filteredClasses.map((cls) => (
-            <TableRow key={cls.id}>
+          {filteredClasses.map((cls: any) => (
+            <TableRow key={cls._id}>
               <TableCell>{cls.level}</TableCell>
-              <TableCell>{cls.students} élèves</TableCell>
+              <TableCell>{cls.studentsNumber} élèves</TableCell>
+              <TableCell>{cls.teacher} </TableCell>
               <TableCell className="flex space-x-2">
                 <Button variant="ghost" size="icon">
                   <Edit2 className="h-4 w-4" />

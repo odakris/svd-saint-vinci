@@ -11,15 +11,15 @@ const ClassSchema = new mongoose.Schema(
     studentsNumber: {
       type: Number,
       required: [true, "Le nombre d'élève est requis"],
-      unique: true,
-      trim: true,
-      lowercase: true,
     },
     teacher: {
       type: String,
       required: [true, "Le professeur est requis"],
     },
-    students: [Student],
+    students: {
+      type: Array,
+      value: [Student],
+    },
   },
   {
     timestamps: true,
