@@ -9,12 +9,10 @@ export interface Student {
 }
 
 export interface Class {
-  id: string;
-  name: string;
+  // id: string;
   level: string;
-  teacherId: string;
+  teacher: string;
   students: number;
-  subjects: string[];
 }
 
 export interface Teacher {

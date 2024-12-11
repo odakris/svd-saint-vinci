@@ -82,7 +82,7 @@ const EditTeacherPage = () => {
       <h2 className="text-xl font-bold mb-4">{"Modifier l'élève"}</h2>
       {error && <p className="text-red-500">{error}</p>}
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
+        {/* <div>
           <Label htmlFor="firstName">Prénom</Label>
           <Input
             id="firstName"
@@ -111,7 +111,7 @@ const EditTeacherPage = () => {
             onChange={(e) => handleChange("email", e.target.value)}
             required
           />
-        </div>
+        </div> */}
         <div>
           <Label htmlFor="class">Classe</Label>
           <Select onValueChange={(value) => handleChange("class", value)} value={formData.class}>

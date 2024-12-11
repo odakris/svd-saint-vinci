@@ -3,16 +3,16 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Edit2, Eye, EyeOff, Trash2 } from "lucide-react";
-import { useUsers } from "@/hooks/UseUsers";
+import { useUsers } from "@/hooks/useUsers";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface UserListProps {
   searchQuery: string;
-  selectedClass: string;
+  selectedRole: string;
 }
 
-export function UsersList({ searchQuery, selectedClass }: UserListProps) {
+export function UsersList({ searchQuery, selectedRole }: UserListProps) {
   const { users, isLoading, mutate } = useUsers();
   const [visiblePasswords, setVisiblePasswords] = useState<Record<string, boolean>>({});
   const router = useRouter();
@@ -25,8 +25,8 @@ export function UsersList({ searchQuery, selectedClass }: UserListProps) {
     const matchesSearch =
       user.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
       user.lastName.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesClass = selectedClass === "all" || user.class === selectedClass;
-    return matchesSearch && matchesClass;
+    const matchesRole = selectedRole === "all" || user.role === selectedRole;
+    return matchesSearch && matchesRole;
   });
 
   const handleTogglePassword = (id: string) => {

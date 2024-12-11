@@ -1,8 +1,83 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/lib/db";
 import StudentModel from "@/models/Student";
-import { Student } from "@/types/index";
+import { Class, Classes, Student } from "@/types/index";
 import { Types } from "mongoose";
+import UserModel from "@/models/Users";
+import ClassModel from "@/models/Classes";
+
+// const fetchTeacher = async () => {
+//   try {
+//     const response = await fetch(`/api/teachers/`, { method: "GET" });
+//     if (!response.ok) {
+//       throw new Error("Failed to fetch teacher data");
+//     }
+//     const data = await response.json();
+
+//     return data;
+//   } catch (err: any) {
+//     setError(err.message);
+//   }
+// };
+export async function POSTCLASSES() {
+  try {
+    await connectDB();
+
+    // Fetch all students
+    const students = await StudentModel.find();
+
+    // Validate that we have students
+    if (!students || students.length === 0) {
+      return NextResponse.json({ error: "No students found" }, { status: 400 });
+    }
+
+    // Group students by class
+    const groupedClasses = students.reduce((acc: Record<string, any>, student) => {
+      if (!acc[student.class]) {
+        acc[student.class] = {
+          level: student.class,
+          students: [],
+        };
+      }
+      acc[student.class].students.push(student);
+      return acc;
+    }, {});
+
+    // Fetch all teachers
+    const teachers = await UserModel.find({ role: "Professeur" });
+
+    // Prepare classes with teacher information
+    const classes = Object.keys(groupedClasses).map((className) => {
+      const teacher = teachers.find((t) => t.class === className);
+
+      return {
+        level: className,
+        teacher: teacher ? `${teacher.firstName} ${teacher.lastName}` : "No teacher assigned",
+        students: groupedClasses[className].students.map((s: Student) => ({
+          id: s.id,
+          firstName: s.firstName,
+          lastName: s.lastName,
+          class: s.class,
+          birthDate: s.birthDate,
+          email: s.email,
+          parentEmail: s.parentEmail,
+        })),
+        studentsNumber: groupedClasses[className].students.length,
+      };
+    });
+
+    // Insert classes into the ClassModel collection
+    const result = await ClassModel.insertMany(classes);
+
+    return NextResponse.json({
+      message: "Classes created successfully",
+      data: result,
+    });
+  } catch (error) {
+    console.error("Error creating classes:", error);
+    return NextResponse.json({ error: "Error creating classes" }, { status: 500 });
+  }
+}
 
 export async function POST(request: Request) {
   try {
@@ -35,6 +110,9 @@ export async function POST(request: Request) {
       throw error;
     });
     console.log(result);
+
+    // Classes creation
+    await POSTCLASSES();
 
     return NextResponse.json({
       message: "Import terminé avec succès",

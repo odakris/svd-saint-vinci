@@ -15,7 +15,7 @@ interface TeacherListProps {
 
 export function TeachersList({ searchQuery, selectedClass }: TeacherListProps) {
   const { teachers, isLoading, mutate } = useTeachers();
-  const [visiblePasswords, setVisiblePasswords] = useState<Record<string, boolean>>({});
+  // const [visiblePasswords, setVisiblePasswords] = useState<Record<string, boolean>>({});
   const router = useRouter();
 
   if (isLoading) {
@@ -30,25 +30,25 @@ export function TeachersList({ searchQuery, selectedClass }: TeacherListProps) {
     return matchesSearch && matchesClass;
   });
 
-  const handleTogglePassword = (id: string) => {
-    setVisiblePasswords((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
-  };
+  // const handleTogglePassword = (id: string) => {
+  //   setVisiblePasswords((prev) => ({
+  //     ...prev,
+  //     [id]: !prev[id],
+  //   }));
+  // };
 
-  const handleDelete = async (id: string) => {
-    if (confirm("Êtes-vous sûr de vouloir supprimer ce professeur ?")) {
-      try {
-        await fetch(`/api/teachers/${id}`, {
-          method: "DELETE",
-        });
-        mutate();
-      } catch (error) {
-        console.error("Erreur lors de la suppression:", error);
-      }
-    }
-  };
+  // const handleDelete = async (id: string) => {
+  //   if (confirm("Êtes-vous sûr de vouloir supprimer ce professeur ?")) {
+  //     try {
+  //       await fetch(`/api/teachers/${id}`, {
+  //         method: "DELETE",
+  //       });
+  //       mutate();
+  //     } catch (error) {
+  //       console.error("Erreur lors de la suppression:", error);
+  //     }
+  //   }
+  // };
 
   return (
     <div className="space-y-4">
@@ -60,8 +60,8 @@ export function TeachersList({ searchQuery, selectedClass }: TeacherListProps) {
               <TableHead>Nom</TableHead>
               <TableHead>Prénom</TableHead>
               <TableHead>Classe</TableHead>
-              <TableHead>Email</TableHead>
-              <TableHead>Mot de Passe</TableHead>
+              {/* <TableHead>Email</TableHead>
+              <TableHead>Mot de Passe</TableHead> */}
               <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
@@ -71,7 +71,7 @@ export function TeachersList({ searchQuery, selectedClass }: TeacherListProps) {
                 <TableCell>{teacher.lastName}</TableCell>
                 <TableCell>{teacher.firstName}</TableCell>
                 <TableCell>{teacher.class}</TableCell>
-                <TableCell>{teacher.email}</TableCell>
+                {/* <TableCell>{teacher.email}</TableCell>
                 <TableCell>
                   <div className="flex justify-between items-center space-x-2 w-[200px]">
                     <span>{visiblePasswords[teacher._id] ? teacher.password : "*".repeat(12)}</span>
@@ -79,7 +79,7 @@ export function TeachersList({ searchQuery, selectedClass }: TeacherListProps) {
                       {visiblePasswords[teacher._id] ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                     </Button>
                   </div>
-                </TableCell>
+                </TableCell> */}
                 <TableCell className="flex space-x-2">
                   <Button
                     variant="ghost"
@@ -88,9 +88,9 @@ export function TeachersList({ searchQuery, selectedClass }: TeacherListProps) {
                   >
                     <Edit2 className="h-4 w-4" />
                   </Button>
-                  <Button variant="ghost" size="icon" onClick={() => handleDelete(teacher._id)}>
+                  {/* <Button variant="ghost" size="icon" onClick={() => handleDelete(teacher._id)}>
                     <Trash2 className="h-4 w-4" />
-                  </Button>
+                  </Button> */}
                 </TableCell>
               </TableRow>
             ))}

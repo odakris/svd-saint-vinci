@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/lib/db";
-import TeacherModel from "@/models/Teacher";
+import UserModel from "@/models/Users";
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
   try {
@@ -10,7 +10,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
     if (!id) {
       return NextResponse.json({ error: "ID non fourni" }, { status: 400 });
     }
-    const teacher = await TeacherModel.findById(id);
+    const teacher = await UserModel.findById(id);
     if (!teacher) {
       return NextResponse.json({ error: "Professeur non trouvé" }, { status: 404 });
     }
@@ -30,7 +30,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
       return NextResponse.json({ error: "ID non fourni" }, { status: 400 });
     }
     const data = await request.json();
-    const teacher = await TeacherModel.findByIdAndUpdate(id, data, { new: true });
+    const teacher = await UserModel.findByIdAndUpdate(id, data, { new: true });
     if (!teacher) {
       return NextResponse.json({ error: "Professeur non trouvé" }, { status: 404 });
     }
@@ -49,7 +49,7 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
     if (!id) {
       return NextResponse.json({ error: "ID non fourni" }, { status: 400 });
     }
-    const teacher = await TeacherModel.findByIdAndDelete(id);
+    const teacher = await UserModel.findByIdAndDelete(id);
     if (!teacher) {
       return NextResponse.json({ error: "Professeur non trouvé" }, { status: 404 });
     }

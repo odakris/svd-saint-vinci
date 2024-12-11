@@ -2,36 +2,36 @@
 
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Classes } from "@/types";
+import { Role } from "@/types";
 
 interface UserFiltersProps {
   searchQuery: string;
   setSearchQuery: (value: string) => void;
-  selectedClass: string;
-  setSelectedClass: (value: string) => void;
+  selectedRole: string;
+  setSelectedRole: (value: string) => void;
 }
 
-export function UsersFilters({ searchQuery, setSearchQuery, selectedClass, setSelectedClass }: UserFiltersProps) {
+export function UsersFilters({ searchQuery, setSearchQuery, selectedRole, setSelectedRole }: UserFiltersProps) {
   return (
     <div className="flex space-x-4">
       <div className="flex-1">
         <Input
-          placeholder="Rechercher un élève..."
+          placeholder="Rechercher un utilisateur..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
-      <Select value={selectedClass} onValueChange={setSelectedClass}>
+      <Select value={selectedRole} onValueChange={setSelectedRole}>
         <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Filtrer par classe" />
+          <SelectValue placeholder="Filtrer par droit" />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="all">Tous les niveaux</SelectItem>
-          {Object.keys(Classes)
+          {Object.keys(Role)
             .filter((key) => isNaN(Number(key))) // Exclude numeric keys
-            .map((className) => (
-              <SelectItem key={Classes[className as keyof typeof Classes]} value={className.toString()}>
-                {className}
+            .map((rightName) => (
+              <SelectItem key={Role[rightName as keyof typeof Role]} value={rightName.toString()}>
+                {rightName}
               </SelectItem>
             ))}
         </SelectContent>
