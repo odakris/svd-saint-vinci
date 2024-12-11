@@ -26,6 +26,15 @@ export interface Teacher {
   class?: string;
 }
 
+export interface User {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  class?: string;
+}
+
 export enum Classes {
   "Petite Section" = 1,
   "Moyenne Section" = 2,
@@ -35,4 +44,9 @@ export enum Classes {
   "CE2" = 6,
   "CM1" = 7,
   "CM2" = 8,
+}
+
+export enum Role {
+  "Professeur" = 1,
+  "Admin" = 2,
 }

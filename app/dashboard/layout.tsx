@@ -30,6 +30,7 @@ const sidebarItems: SidebarItem[] = [
   { icon: Users, label: "Élèves", href: "/dashboard/students" },
   { icon: GraduationCap, label: "Classes", href: "/dashboard/classes" },
   { icon: UserPen, label: "Professeurs", href: "/dashboard/teachers" },
+  { icon: UserPen, label: "Utilisateurs", href: "/dashboard/users" },
   { icon: BookOpen, label: "Matières", href: "/dashboard/subjects" },
   { icon: ClipboardList, label: "Notes", href: "/dashboard/grades" },
   { icon: Import, label: "Import", href: "/dashboard/import" },

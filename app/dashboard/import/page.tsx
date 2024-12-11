@@ -82,7 +82,7 @@ export default function ImportPage() {
         row["Nom"] || row["NOM"] || row["nom"]
       }@ecole.fr`.toLowerCase(),
       parentEmail: `parent.${row["Nom"] || row["NOM"] || row["nom"]}@email.com`.toLowerCase(),
-      class: row["Classe"] || row["CLASSE"] || row["classe"] || "6ème A",
+      class: row["Classe"] || row["CLASSE"] || row["classe"] || null,
     }));
 
     const response = await fetch("/api/students/import", {
@@ -120,7 +120,7 @@ export default function ImportPage() {
             accept=".csv,.xls,.xlsx" // Accept only CSV and XLSX files
           />
           {/* Import button to process the file */}
-          <Button className="mx-4" onClick={() => handleImportClick}>
+          <Button className="mx-4" onClick={handleImportClick}>
             <PlusCircle className="mr-2 h-4 w-4" />
             Import
           </Button>
@@ -131,7 +131,7 @@ export default function ImportPage() {
         {students && students.length > 0
           ? students.map((student, index) => (
               <div key={index} className="p-2 border rounded-md my-2">
-                {student.firstName} {student.lastName} - {student.birthDate}
+                {student["Prénom"]} {student["Nom"]} - {student["Date de Naissance"]}
               </div>
             ))
           : "Aucune data importée"}
