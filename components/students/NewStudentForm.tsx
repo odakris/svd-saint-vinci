@@ -34,10 +34,10 @@ export default function NewStudentForm() {
     const formatedData = {
       firstName: formData.firstName,
       lastName: formData.lastName,
+      class: formData.class, // Classe par défaut
       birthDate: formData.birthDate, // Utiliser la date telle quelle
       email: `${formData.firstName}.${formData.lastName}@ecole.fr`.toLowerCase(), // Générer un email basé sur prénom et nom
       parentEmail: formData.parentEmail ? formData.parentEmail : `parent.${formData.lastName}@email.com`.toLowerCase(), // Email parent par défaut
-      class: formData.class, // Classe par défaut
     };
 
     setIsSubmitting(true);

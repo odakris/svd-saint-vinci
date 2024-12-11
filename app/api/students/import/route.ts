@@ -54,7 +54,7 @@ export async function POSTCLASSES() {
         level: className,
         teacher: teacher ? `${teacher.firstName} ${teacher.lastName}` : "No teacher assigned",
         students: groupedClasses[className].students.map((s: Student) => ({
-          id: s.id,
+          // id: s.id,
           firstName: s.firstName,
           lastName: s.lastName,
           class: s.class,
@@ -93,7 +93,7 @@ export async function POST(request: Request) {
     }
 
     const preparedStudents: Student[] = students.map((student) => ({
-      id: new Types.ObjectId().toString(), // Utilisation de mongoose.Types.ObjectId pour générer un id
+      // id: new Types.ObjectId().toString(), // Utilisation de mongoose.Types.ObjectId pour générer un id
       firstName: student.firstName,
       lastName: student.lastName,
       birthDate: student.birthDate, // Utiliser la date telle quelle
