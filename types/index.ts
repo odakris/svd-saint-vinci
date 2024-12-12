@@ -6,6 +6,7 @@ export interface Student {
   birthDate: string;
   email: string;
   parentEmail: string;
+  admission: string;
 }
 
 export interface Class {
@@ -22,6 +23,12 @@ export interface Teacher {
   email: string;
   password: string;
   class?: string;
+}
+
+export interface SchoolYear {
+  year: string;
+  isActive: boolean;
+  archivedAt: Date | null;
 }
 
 export interface User {

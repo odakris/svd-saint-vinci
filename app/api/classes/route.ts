@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/lib/db";
-import ClassModel from "@/models/Classes";
+import ClassModel from "@/models/Classe";
 
 export async function GET() {
   try {

@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 import connectDB from "@/lib/db";
 import StudentModel from "@/models/Student";
 import { Student } from "@/types/index";
-import UserModel from "@/models/Users";
-import ClassModel from "@/models/Classes";
+import UserModel from "@/models/User";
+import ClassModel from "@/models/Classe";
 
 export async function POSTCLASSES() {
   try {
@@ -46,6 +46,7 @@ export async function POSTCLASSES() {
           birthDate: s.birthDate,
           email: s.email,
           parentEmail: s.parentEmail,
+          admission: s.admission,
         })),
         studentsNumber: groupedClasses[className].students.length,
       };
@@ -85,6 +86,7 @@ export async function POST(request: Request) {
       email: student.email, // Générer un email basé sur prénom et nom
       parentEmail: student.parentEmail, // Email parent par défaut
       class: student.class, // Classe par défaut
+      admission: student.admission,
     }));
 
     const result = await StudentModel.insertMany(preparedStudents, { ordered: false }).catch((error) => {

@@ -35,7 +35,7 @@ const StudentSchema = new mongoose.Schema(
     },
     admission: {
       type: String,
-      enum: ["admis", "redoublement"],
+      enum: ["", "admis", "redoublement"],
       default: "",
     },
   },

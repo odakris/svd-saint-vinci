@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import StudentModel from "./Student";
-import Student from "./Student";
 
 const ClassSchema = new mongoose.Schema(
   {
@@ -19,7 +18,7 @@ const ClassSchema = new mongoose.Schema(
     },
     students: {
       type: Array,
-      value: [Student],
+      value: [StudentModel],
     },
   },
   {

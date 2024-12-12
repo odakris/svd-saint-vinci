@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import connectDB from "@/lib/db";
-import UserModel from "@/models/Users";
-import ClassModel from "../../../../models/Classes";
+import UserModel from "@/models/User";
+import ClassModel from "../../../../models/Classe";
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
   try {

@@ -8,7 +8,7 @@ interface IUser extends Document {
   birthDate: string;
   firstName: string;
   lastName: string;
-  role: "Admin" | "Professeur";
+  role: "admin" | "professeur";
   class: string;
   comparePassword(candidatePassword: string): Promise<boolean>;
 }
@@ -43,7 +43,7 @@ const UserSchema = new mongoose.Schema<IUser>(
     },
     role: {
       type: String,
-      enum: ["Admin", "Professeur"],
+      enum: ["admin", "professeur"],
       required: [true, "Le rôle est requis"],
     },
     class: {
@@ -58,20 +58,27 @@ const UserSchema = new mongoose.Schema<IUser>(
     timestamps: true,
   }
 );
+// UserSchema.pre<IUser>("save", async function (next) {
+//   if (!this.isModified("password")) return next();
+//   this.password = await bcrypt.hash(this.password, 10);
+//   next();
+// });
 
-// Middleware pour hasher le mot de passe avant l'enregistrement
-UserSchema.pre<IUser>("save", async function (next) {
+UserSchema.pre<IUser>("save", function (next) {
   if (!this.isModified("password")) return next();
-  this.password = await bcrypt.hash(this.password, 10);
+  // On ne modifie plus le mot de passe, on le laisse tel quel
   next();
 });
 
 // Méthode d'instance pour comparer les mots de passe
-UserSchema.methods.comparePassword = async function (candidatePassword: string): Promise<boolean> {
-  return bcrypt.compare(candidatePassword, this.password);
-};
+// UserSchema.methods.comparePassword = async function (candidatePassword: string): Promise<boolean> {
+//   return bcrypt.compare(candidatePassword, this.password);
+// };
 
+UserSchema.methods.comparePassword = function (candidatePassword: string): boolean {
+  return candidatePassword === this.password;
+};
 // Création et exportation du modèle User
-const UserModel = mongoose.models.UserUser || mongoose.model("User", UserSchema);
+const UserModel = mongoose.models.User || mongoose.model("User", UserSchema);
 
 export default UserModel;

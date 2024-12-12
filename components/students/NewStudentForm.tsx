@@ -14,6 +14,7 @@ export default function NewStudentForm() {
     birthDate: null,
     class: "",
     parentEmail: "",
+    admission: "",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -38,6 +39,7 @@ export default function NewStudentForm() {
       birthDate: formData.birthDate, // Utiliser la date telle quelle
       email: `${formData.firstName}.${formData.lastName}@ecole.fr`.toLowerCase(), // Générer un email basé sur prénom et nom
       parentEmail: formData.parentEmail ? formData.parentEmail : `parent.${formData.lastName}@email.com`.toLowerCase(), // Email parent par défaut
+      admission: formData.admission,
     };
 
     setIsSubmitting(true);
@@ -61,6 +63,7 @@ export default function NewStudentForm() {
           birthDate: null,
           class: "",
           parentEmail: "",
+          admission: "",
         });
       } else {
         const errorData = await response.json();

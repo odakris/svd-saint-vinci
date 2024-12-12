@@ -1,23 +1,37 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { passwordGenerator } from "@/utils/PasswordGenerator";
 import { Classes, Role } from "../../types";
+import { useRouter } from "next/navigation";
 
 export default function NewUserForm() {
+  const router = useRouter();
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     birthDate: "",
+    email: "",
+    password: "", // Initial password value is empty
     class: "",
     role: "",
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // UseEffect hook to generate password once on mount
+  useEffect(() => {
+    const initialPassword = passwordGenerator(6); // Generate password once
+    setFormData((prev) => ({
+      ...prev,
+      password: initialPassword, // Set the generated password in the state
+    }));
+  }, []); // Empty dependency array ensures it only runs once on mount
 
   const handleChange = (field: string, value: any) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -32,14 +46,12 @@ export default function NewUserForm() {
       return;
     }
 
-    const password = passwordGenerator(6);
-
     const formatedData = {
       firstName: formData.firstName,
       lastName: formData.lastName,
       birthDate: formData.birthDate,
       email: `${formData.firstName}.${formData.lastName}@group-saint-exupery.fr`.toLowerCase(), // Générer un email basé sur prénom et nom
-      password: password,
+      password: formData.password,
       class: formData.class,
       role: formData.role,
     };
@@ -61,13 +73,7 @@ export default function NewUserForm() {
         const result = await response.json();
         alert("User created successfully!");
         console.log("Created user:", result);
-        setFormData({
-          firstName: "",
-          lastName: "",
-          birthDate: "",
-          class: "",
-          role: "",
-        });
+        router.push("/dashboard");
       } else {
         const errorData = await response.json();
         alert(`Error: ${errorData.error || "Failed to create user"}`);
@@ -79,7 +85,6 @@ export default function NewUserForm() {
       setIsSubmitting(false);
     }
   };
-  console.log(formData.role);
 
   return (
     <div className="max-w-md mx-auto p-6 bg-white shadow rounded">
@@ -108,6 +113,10 @@ export default function NewUserForm() {
           />
         </div>
         <div>
+          <Label htmlFor="password">Mot de passe</Label>
+          <Input id="password" type="text" value={formData.password} disabled />
+        </div>
+        <div>
           <Label htmlFor="birthDate">Date de naissance *</Label>
           <Input id="birthDate" type="date" onChange={(e) => handleChange("birthDate", e.target.value)} required />
         </div>
@@ -129,7 +138,7 @@ export default function NewUserForm() {
           </Select>
         </div>
 
-        {formData.role === "Professeur" && (
+        {formData.role === "professeur" && (
           <div>
             <Label htmlFor="class">Classe *</Label>
             <Select onValueChange={(value) => handleChange("class", value)} value={formData.class}>

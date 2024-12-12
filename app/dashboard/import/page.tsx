@@ -61,6 +61,7 @@ export default function ImportPage() {
           birthDate,
           email,
           parentEmail,
+          admission: "",
           class: level, // Utilisation de 'level' comme classe
           level, // Niveau
         };
