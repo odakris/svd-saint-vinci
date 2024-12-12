@@ -53,6 +53,7 @@ export function StudentsList({ searchQuery, selectedClass }: StudentListProps) {
               <TableHead>Date de naissance</TableHead>
               <TableHead>Classe</TableHead>
               <TableHead>Email Parent</TableHead>
+              <TableHead>Admission</TableHead>
               <TableHead>Actions</TableHead>
             </TableRow>
           </TableHeader>
@@ -64,6 +65,7 @@ export function StudentsList({ searchQuery, selectedClass }: StudentListProps) {
                 <TableCell>{student.birthDate}</TableCell>
                 <TableCell>{student.class}</TableCell>
                 <TableCell>{student.parentEmail}</TableCell>
+                <TableCell>{student.admission ? student.admission : "-"}</TableCell>
                 <TableCell className="flex space-x-2">
                   <Button
                     variant="ghost"

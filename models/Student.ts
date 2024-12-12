@@ -33,6 +33,11 @@ const StudentSchema = new mongoose.Schema(
       trim: true,
       lowercase: true,
     },
+    admission: {
+      type: String,
+      enum: ["admis", "redoublement"],
+      default: "",
+    },
   },
   {
     timestamps: true,

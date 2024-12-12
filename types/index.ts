@@ -48,3 +48,8 @@ export enum Role {
   "Professeur" = 1,
   "Admin" = 2,
 }
+
+export enum Admission {
+  "admis" = 1,
+  "redoublement" = 2,
+}
