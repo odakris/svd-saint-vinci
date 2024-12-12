@@ -48,6 +48,7 @@ const UserSchema = new mongoose.Schema<IUser>(
     },
     class: {
       type: String,
+      default: "",
       // required: function () {
       //   return this.role === "teacher";
       // }, // `this` fait référence au document

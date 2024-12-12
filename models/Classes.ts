@@ -7,6 +7,7 @@ const ClassSchema = new mongoose.Schema(
     level: {
       type: String,
       required: [true, "La classe est requise"],
+      unique: true,
     },
     studentsNumber: {
       type: Number,
