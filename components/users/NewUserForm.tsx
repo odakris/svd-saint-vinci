@@ -56,8 +56,6 @@ export default function NewUserForm() {
       role: formData.role,
     };
 
-    console.log("Formated Data:", formatedData);
-
     setIsSubmitting(true);
 
     try {
@@ -72,7 +70,7 @@ export default function NewUserForm() {
       if (response.ok) {
         const result = await response.json();
         alert("User created successfully!");
-        console.log("Created user:", result);
+
         router.push("/dashboard");
       } else {
         const errorData = await response.json();

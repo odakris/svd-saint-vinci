@@ -2,12 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import {
-  Bell,
-  LogOut,
-  Settings,
-  User
-} from "lucide-react";
+import { Bell, LogOut, Settings, User } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,21 +17,14 @@ export default function DashboardHeader() {
     <header className="border-b">
       <div className="flex h-16 items-center px-4">
         <div className="ml-auto flex items-center space-x-4">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="relative"
-          >
+          <Button variant="ghost" size="icon" className="relative">
             <Bell className="h-5 w-5" />
             <span className="absolute top-0 right-0 h-2 w-2 bg-red-600 rounded-full" />
           </Button>
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                className="relative h-8 w-8 rounded-full"
-              >
+              <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                 <User className="h-5 w-5" />
               </Button>
             </DropdownMenuTrigger>

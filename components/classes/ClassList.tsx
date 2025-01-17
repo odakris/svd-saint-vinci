@@ -42,7 +42,7 @@ export function ClassList({ searchQuery, selectedLevel }: ClassListProps) {
             <TableRow key={cls._id}>
               <TableCell>{cls.level}</TableCell>
               <TableCell>{cls.studentsNumber} élèves</TableCell>
-              <TableCell>{cls.teacher}</TableCell>
+              <TableCell>{cls.teacher ? cls.teacher : "Pas de professeur assigné"}</TableCell>
               <TableCell className="flex space-x-2">
                 <Button
                   variant="ghost"

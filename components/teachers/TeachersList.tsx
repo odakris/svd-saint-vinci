@@ -70,7 +70,7 @@ export function TeachersList({ searchQuery, selectedClass }: TeacherListProps) {
               <TableRow key={teacher._id}>
                 <TableCell>{teacher.lastName}</TableCell>
                 <TableCell>{teacher.firstName}</TableCell>
-                <TableCell>{teacher.class}</TableCell>
+                <TableCell>{teacher.class ? teacher.class : "Pas de classe assigné"}</TableCell>
                 {/* <TableCell>{teacher.email}</TableCell>
                 <TableCell>
                   <div className="flex justify-between items-center space-x-2 w-[200px]">

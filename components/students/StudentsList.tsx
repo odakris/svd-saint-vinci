@@ -3,9 +3,10 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Edit2, Trash2 } from "lucide-react";
-import type { Student } from "@/types";
 import { useStudents } from "@/hooks/useStudents";
 import { useRouter } from "next/navigation";
+import { useUsers } from "@/hooks/useUsers";
+import { Role } from "@/types";
 
 interface StudentListProps {
   searchQuery: string;
@@ -14,6 +15,8 @@ interface StudentListProps {
 
 export function StudentsList({ searchQuery, selectedClass }: StudentListProps) {
   const { students, isLoading, mutate } = useStudents();
+  const { users } = useUsers();
+  console.log(users);
   const router = useRouter();
 
   if (isLoading) {
@@ -74,9 +77,11 @@ export function StudentsList({ searchQuery, selectedClass }: StudentListProps) {
                   >
                     <Edit2 className="h-4 w-4" />
                   </Button>
+                  {/* {users.role === Role.admin && ( */}
                   <Button variant="ghost" size="icon" onClick={() => handleDelete(student._id)}>
                     <Trash2 className="h-4 w-4" />
                   </Button>
+                  {/* )} */}
                 </TableCell>
               </TableRow>
             ))}

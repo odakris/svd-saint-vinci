@@ -36,7 +36,7 @@ export function YearSelector() {
           setCurrentYear(value);
         }}
       >
-        <SelectTrigger className="w-[180px]">
+        <SelectTrigger className="w-[230px]">
           <SelectValue placeholder={currentYear} />
         </SelectTrigger>
         <SelectContent>

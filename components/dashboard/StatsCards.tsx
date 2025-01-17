@@ -1,10 +1,26 @@
+import { useStudents } from "@/hooks/useStudents";
+import { useTeachers } from "@/hooks/useTeachers";
+import { useClasses } from "@/hooks/useClasses";
+
 export default function StatsCards() {
+  // Hooks pour récupérer les données
+  const { students, isLoading: isLoadingStudents } = useStudents();
+  const { teachers, isLoading: isLoadingTeachers } = useTeachers();
+  const { classes, isLoading: isLoadingClasses } = useClasses();
+
+  // Vérification de l'état de chargement global
+  const isLoading = isLoadingStudents || isLoadingTeachers || isLoadingClasses;
+
+  // Gestion des valeurs par défaut si les données ne sont pas encore chargées
   const stats = [
-    { name: "Total Élèves", value: "486" },
-    { name: "Classes", value: "24" },
-    { name: "Professeurs", value: "32" },
-    { name: "Moyenne Générale", value: "14.8" },
+    { name: "Total Élèves", value: students?.length || 0 },
+    { name: "Classes", value: classes?.length || 0 },
+    { name: "Professeurs", value: teachers?.length || 0 },
   ];
+
+  if (isLoading) {
+    return <div>Chargement des statistiques...</div>;
+  }
 
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">

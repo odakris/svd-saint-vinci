@@ -32,7 +32,6 @@ export default function NewTeacherForm() {
     }
 
     const password = passwordGenerator(4);
-    console.log(password);
 
     const formatedData = {
       firstName: formData.firstName,
@@ -42,8 +41,6 @@ export default function NewTeacherForm() {
       password: password,
       class: formData.class,
     };
-
-    console.log("Formated Data:", formatedData);
 
     setIsSubmitting(true);
 
@@ -59,7 +56,7 @@ export default function NewTeacherForm() {
       if (response.ok) {
         const result = await response.json();
         alert("Teacher created successfully!");
-        console.log("Created teacher:", result);
+
         setFormData({
           firstName: "",
           lastName: "",

@@ -56,7 +56,7 @@ export default function NewStudentForm() {
       if (response.ok) {
         const result = await response.json();
         alert("Student created successfully!");
-        console.log("Created student:", result);
+
         setFormData({
           firstName: "",
           lastName: "",

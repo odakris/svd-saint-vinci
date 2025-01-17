@@ -8,7 +8,7 @@ interface User {
   email: string;
   firstName: string;
   lastName: string;
-  role: "admin" | "teacher";
+  role: "admin" | "professeur";
 }
 
 interface AuthState {
@@ -28,7 +28,7 @@ export const useAuth = create<AuthState>()(
       setAuth: (user, token) => set({ user, token }),
       logout: () => set({ user: null, token: null }),
       isAdmin: () => get().user?.role === "admin",
-      isTeacher: () => get().user?.role === "teacher",
+      isTeacher: () => get().user?.role === "professeur",
     }),
     {
       name: "auth-storage",

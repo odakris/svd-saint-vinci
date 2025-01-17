@@ -8,7 +8,6 @@ export async function POST(request: Request) {
     await connectDB();
     const data = await request.json();
 
-    console.log(data);
     // Vérifier si l'utilisateur existe déjà
     const existingUser = await User.findOne({ email: data.email });
     if (existingUser) {
@@ -19,7 +18,6 @@ export async function POST(request: Request) {
     const user = await User.create(data);
     const token = generateToken(user);
 
-    console.log(user);
     return NextResponse.json(
       {
         token,

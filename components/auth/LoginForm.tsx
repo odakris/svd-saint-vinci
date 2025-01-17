@@ -10,6 +10,7 @@ import { Lock, Mail } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
 import { useAuth } from "@/hooks/useAuth";
+import Image from "next/image";
 
 const setCookie = (name: string, value: string, days?: number) => {
   const expires = days ? `; expires=${new Date(Date.now() + days * 86400000).toUTCString()}` : "";
@@ -63,7 +64,14 @@ export default function LoginForm() {
   return (
     <Card className="w-[400px]">
       <CardHeader className="space-y-1 text-center">
-        <h2 className="text-2xl font-bold">Connexion</h2>
+        <h1 className="text-3xl font-bold">Groupe Scolaire Saint-Exupéry</h1>
+        <Image
+          src="/images/logo-ecole.jpg"
+          alt="Groupe Scolaire Saint-Exupéry"
+          width={200}
+          height={200}
+          className="rounded-full align-baseline m-auto"
+        />
         <p className="text-sm text-muted-foreground">Entrez vos identifiants pour accéder au tableau de bord</p>
       </CardHeader>
       <form onSubmit={handleSubmit}>
@@ -85,7 +93,7 @@ export default function LoginForm() {
           </div>
           <div className="space-y-2">
             <Label htmlFor="password">Mot de passe</Label>
-            <div className="relative">
+            <div className="relative flex flex-col text-center space-y-2">
               <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
               <Input
                 id="password"
@@ -102,12 +110,7 @@ export default function LoginForm() {
           <Button type="submit" className="w-full" disabled={isLoading}>
             {isLoading ? "Connexion..." : "Se connecter"}
           </Button>
-          <p className="text-sm text-center text-muted-foreground">
-            Pas encore de compte ?{" "}
-            <Link href="/auth/register" className="text-primary hover:underline">
-              Inscription
-            </Link>
-          </p>
+          <p className="text-sm text-center text-muted-foreground">Plateforme réservée au personnel autorisé</p>
         </CardFooter>
       </form>
     </Card>

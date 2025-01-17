@@ -28,9 +28,12 @@ export function ClassFilters({ searchQuery, setSearchQuery, selectedLevel, setSe
         <SelectContent>
           <SelectItem value="all">Tous les niveaux</SelectItem>
           {Object.keys(Classes)
-            .filter((key) => isNaN(Number(key)))
+            .filter((key) => isNaN(Number(key))) // Exclude numeric keys
             .map((className) => (
-              <SelectItem key={Classes[className as keyof typeof Classes]} value={className.toString()}>
+              <SelectItem
+                key={Classes[className as keyof typeof Classes]}
+                value={Classes[className as keyof typeof Classes].toString()}
+              >
                 {className}
               </SelectItem>
             ))}

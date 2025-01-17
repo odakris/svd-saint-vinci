@@ -194,7 +194,7 @@ export default function ImportPage() {
                 {student.firstName} {student.lastName} - {student.birthDate} - {student.class}
               </div>
             ))
-          : "Aucuns élèves importées"}
+          : "Aucuns élèves importés"}
       </div>
     </div>
   );

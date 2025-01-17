@@ -7,7 +7,7 @@ import { NextRequest } from "next/server";
 interface DecodedToken extends JwtPayload {
   id: string;
   email: string;
-  role: "admin" | "teacher"; // Adaptez les rôles à vos besoins
+  role: "admin" | "professeur"; // Adaptez les rôles à vos besoins
   iat: number;
   exp: number;
 }
@@ -43,7 +43,7 @@ export async function verifyAuth(request: NextRequest): Promise<DecodedToken | n
       typeof decoded.id === "string" &&
       typeof decoded.email === "string" &&
       typeof decoded.role === "string" &&
-      decoded.role in { admin: true, teacher: true } // Vérifie si le rôle est valide
+      decoded.role in { admin: true, professeur: true } // Vérifie si le rôle est valide
     ) {
       return decoded;
     }
